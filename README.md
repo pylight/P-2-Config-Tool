@@ -3,7 +3,7 @@ P^2 Config Tool
 
 * Author:    Sven K. (<admin@ganz-sicher.net>)
 * Date:      August, 2011
-* Version:   0.1
+* Version:   0.2
 * GitHub:    <https://github.com/pylight/P-2-Config-Tool>
 * Dependecies: gksu, networkmanager, nmcli, python3
 
@@ -13,9 +13,10 @@ The goal of this little tool is to make switching between Perfect
 Privacy-Servers (http://perfect-privacy.com/) easier with Networkmanager / 
 under Gnome. P^2 Config Tool is developed for Python 3.x, using Glade and Gtk3.
 
+
 List of Changes:
 ----------------
-Nothing to see here atm, keep moving, please! ;p
+[0.2]	Tray Icon added to hide/show tool
 
 
 Usage:
@@ -34,6 +35,14 @@ the terminal, eg. on Archlinux:
 On first run, the tool will ask for some settings, so the terminal is 
 needed here. You can later start the GUI without an open terminal of course.
 
+You could for example place a bash script in your /usr/bin like this
+to run the tool easier:
+<pre>
+#!/bin/bash
+
+cd /path/folder/with/script
+python3.2 pptool.py
+</pre>
 
 
 Issues or Suggestions?
