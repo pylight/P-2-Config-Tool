@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
-#############################################################################
-#																			#
-#		Little Perfect Privacy Config Tool for Networkmanager (Gnome)		#
-#					for more infos visit 									#	
-#																			#
-#############################################################################
+	#############################################################################
+	#																			#
+	#			P^2 Config Tool for NetworkManager (Gnome)						#
+	#		little helper to switch between Perfect Privacy Servers easily!		#	
+	#	more infos? please visit https://github.com/pylight/P-2-Config-Tool		#
+	#																			#
+	#############################################################################
+
 version = "v0.1"
 desc = "Little config tool for Perfect Privacy / Gnome Network Manager to change the VPN servers quickly! :)"
 
@@ -92,7 +94,7 @@ class VPNTool:
 		self.getservers()
 
 	def getservers(self):
-		f = urlopen("http://pastebin.com/raw.php?i=uTh0si80")
+		f = urlopen("https://raw.github.com/pylight/P-2-Config-Tool/master/servers.list")
 		servers = f.readlines()
 		for url in servers:
 			self.serverlist.append_text(url.decode("utf-8").rstrip())
@@ -157,7 +159,7 @@ class VPNTool:
 		self.about_dialog.set_version(version)
 		self.about_dialog.set_comments(desc)
 		self.about_dialog.set_logo_icon_name("applications-internet")
-		self.about_dialog.set_website("http://ganz-sicher.net")
+		self.about_dialog.set_website("https://github.com/pylight/P-2-Config-Tool")
 		self.about_dialog.connect("response", self.about_close)
 		self.about_dialog.show_all()
 
@@ -173,7 +175,7 @@ class VPNTool:
 		self.stop_vpn(self)
 		print("Connecting to VPN...")
 		pCon = Popen("nmcli con up id " + mainconfig['General']['connection'], shell=True)
-		stat = pCon.poll()
+		stat = pCon.wait()
 		if stat == 0:
 			self.infolabel.set_label("Connected to VPN")
 		else:
