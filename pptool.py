@@ -8,7 +8,7 @@
 	#																			#
 	#############################################################################
 
-version = "v0.1"
+version = "v0.2"
 desc = "Little config tool for Perfect Privacy / Gnome Network Manager to change the VPN servers quickly! :)"
 
 import os, sys, configparser, webbrowser
@@ -70,13 +70,6 @@ def readsettings():
 	mainconfig.read(confpath)
 		
 
-def getvpnsettings():
-	vpnconfig = configparser.RawConfigParser()
-	vpnconfig.read(mainconfig['General']['path'])
-	#gateway = vpnconfig.get("vpn", "gateway")
-	# TODO
-
-
 class VPNTool:
 	def __init__(self):
 		self.builder = Gtk.Builder()
@@ -87,11 +80,19 @@ class VPNTool:
 		self.window = self.builder.get_object('window')
 		self.infolabel = self.builder.get_object('menuitem3')
 		self.serverlist = self.builder.get_object('serverlist')
-			
-		self.window.show_all()
+
+		# set up tray icon
+		self.tray = Gtk.StatusIcon()
+		self.tray.set_visible(False)
+		self.tray.set_from_stock(Gtk.STOCK_NETWORK)
+		self.tray.connect("activate", self.toogle_visible)
+		
 		print("Little PP Config Tool " + version + " started!")
-		getvpnsettings()
 		self.getservers()
+	
+		self.window.show_all()
+		self.tray.set_visible(True)
+
 
 	# get the list of avaliable pp-servers from github
 	def getservers(self):
@@ -186,6 +187,13 @@ class VPNTool:
 	def set_new_server(self, combobox):
 		if combobox.get_active() != 0:		
 			Popen("gksu " + sys.executable + " srv/set_server.py "+ mainconfig['General']['path'] + " " + self.serverlist.get_active_text(), shell=True)
+
+	# tray-icon-clcked: toogle window visibility
+	def toogle_visible(self, trayicon):
+		if self.window.get_visible():
+			self.window.hide()
+		else:
+			self.window.show()
 
 	# close app
 	def destroy(self, window):
