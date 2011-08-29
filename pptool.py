@@ -16,7 +16,7 @@ from gi.repository import Gtk, Pango
 from urllib.request import urlopen 
 from subprocess import Popen
 
-UI_FILE = "window.ui"
+UI_FILE = "gui/window.ui"
 
 
 def readsettings():
@@ -93,8 +93,9 @@ class VPNTool:
 		getvpnsettings()
 		self.getservers()
 
+	# get the list of avaliable pp-servers from github
 	def getservers(self):
-		f = urlopen("https://raw.github.com/pylight/P-2-Config-Tool/master/servers.list")
+		f = urlopen("https://raw.github.com/pylight/P-2-Config-Tool/master/srv/servers.list")
 		servers = f.readlines()
 		for url in servers:
 			self.serverlist.append_text(url.decode("utf-8").rstrip())
@@ -184,7 +185,7 @@ class VPNTool:
 	# update PP gateway server
 	def set_new_server(self, combobox):
 		if combobox.get_active() != 0:		
-			Popen("gksu " + sys.executable + " set_server.py "+ mainconfig['General']['path'] + " " + self.serverlist.get_active_text(), shell=True)
+			Popen("gksu " + sys.executable + " srv/set_server.py "+ mainconfig['General']['path'] + " " + self.serverlist.get_active_text(), shell=True)
 
 	# close app
 	def destroy(self, window):
