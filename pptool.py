@@ -157,7 +157,7 @@ class VPNTool:
 	def about_clicked(self, window):
 		self.about_dialog = Gtk.AboutDialog()
 		self.about_dialog.set_title("About")
-		self.about_dialog.set_program_name("PP VPN Tool")
+		self.about_dialog.set_program_name("PP VPN Config Tool")
 		self.about_dialog.set_version(version)
 		self.about_dialog.set_comments(desc)
 		self.about_dialog.set_logo_icon_name("applications-internet")

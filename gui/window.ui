@@ -31,7 +31,7 @@
   </object>
   <object class="GtkWindow" id="window">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">PP VPN Tool</property>
+    <property name="title" translatable="yes">PP Config Tool</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
     <property name="icon_name">network-wired</property>
