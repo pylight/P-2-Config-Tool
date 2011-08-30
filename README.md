@@ -49,7 +49,7 @@ Screenshots
 ------------
 ![](http://i.imgur.com/fIED5.jpg)
 
-![](http://imgur.com/grlZu)
+![](http://i.imgur.com/grlZu.jpg)
 
 
 Issues or Suggestions?
