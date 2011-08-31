@@ -5,7 +5,7 @@ P^2 Config Tool
 * Date:      August, 2011
 * Version:   0.2
 * GitHub:    <https://github.com/pylight/P-2-Config-Tool>
-* German Blogpost <http://ganz-sicher.net/blog/programmierung-scripting/perfect-privacy-tool-fur-den-networkmanager-p2-vpn-config-tool/>
+* [German Blogpost](http://ganz-sicher.net/blog/programmierung-scripting/perfect-privacy-tool-fur-den-networkmanager-p2-vpn-config-tool/)
 * Dependecies: gksu, networkmanager, nmcli, python3
 
 This free software is copyleft licensed under the GPL license.
