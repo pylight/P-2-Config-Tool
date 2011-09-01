@@ -48,10 +48,14 @@ python3.2 pptool.py
 
 Screenshots
 ------------
+
+Gnome3/Archlinux:
 ![](http://i.imgur.com/fIED5.jpg)
 
 ![](http://i.imgur.com/grlZu.jpg)
 
+Ubuntu 11.10:
+![](http://i.imgur.com/vlV8x.png)
 
 Issues or Suggestions?
 ----------------------
