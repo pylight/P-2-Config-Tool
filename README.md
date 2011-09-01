@@ -51,6 +51,8 @@ Important Notes
 
 Please note that you need to create a systemwide ("Availiable to all users") 
 and working PP VPN-Connection (see http://goo.gl/D84IG for help) to use this tool:
+
+
 ![](http://i.imgur.com/47hRt.png)
 
 On first run you are asked to insert the name of the connection. (in the case above it would be: PP)
@@ -60,11 +62,13 @@ Screenshots
 ------------
 
 Gnome3/Archlinux:
+
 ![](http://i.imgur.com/fIED5.jpg)
 
 ![](http://i.imgur.com/grlZu.jpg)
 
 Ubuntu 11.10:
+
 ![](http://i.imgur.com/vlV8x.png)
 
 Issues or Suggestions?
