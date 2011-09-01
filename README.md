@@ -46,6 +46,16 @@ python3.2 pptool.py
 </pre>
 
 
+Important Notes
+---------------
+
+Please note that you need to create a systemwide ("Availiable to all users") 
+and working PP VPN-Connection (see http://goo.gl/D84IG for help) to use this tool:
+![](http://i.imgur.com/47hRt.png)
+
+On first run you are asked to insert the name of the connection. (in the case above it would be: PP)
+
+
 Screenshots
 ------------
 
