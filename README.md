@@ -6,7 +6,7 @@ P^2 Config Tool
 * Version:   0.2
 * GitHub:    <https://github.com/pylight/P-2-Config-Tool>
 * [German Blogpost](http://ganz-sicher.net/blog/programmierung-scripting/perfect-privacy-tool-fur-den-networkmanager-p2-vpn-config-tool/)
-* Dependecies: gksu, networkmanager, nmcli, python3
+* Dependecies: gksu, networkmanager, nmcli, python3, python3-gobject
 
 This free software is copyleft licensed under the GPL license.
 
@@ -55,11 +55,11 @@ Please note that you need to create a  working PP VPN-Connection
 On first run you are asked to insert the name of the connection. (in the screen below it would be: PP)
 
 
-Ubuntu 11.04/11.10
+Installation - Ubuntu 11.04/11.10
 ------------------
 
 Since Ubuntu 11.04 doesn't use python3 and Gtk3 by default, you'll need to 
-do some freaky stuff to get this tool working here. (in later versions 
+do some crazy things to get this tool working here. (in later versions 
 e.g. 11.10 you can just install ""python3.2"" and ""python2-gobject"" 
 and start having fun!)
 
@@ -78,6 +78,16 @@ libffi6 and python3-gobject
 
 4) You've done it! Now, you can start the tool using
 <pre>python3.2 pptool.py</pre>
+
+
+Installation - Gnome 3 with Archlinux or Fedora
+-----------------------------------------------
+
+Gnome 3 comes with GTK+3 but you'll possibliy need (Archlinux):
+<pre>pacman -S python python-gobject</pre>
+
+In Fedora it would be:
+<pre>yum install python3 python3-gobject</pre>
 
 
 Screenshots
