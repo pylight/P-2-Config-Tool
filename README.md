@@ -49,18 +49,18 @@ python3.2 pptool.py
 Important Notes
 ---------------
 
-Please note that you need to create a  working PP VPN-Connection 
+Please note that you need to create a **working PP VPN-Connection** 
 (see http://goo.gl/D84IG for help) to use this tool.
 
 On first run you are asked to insert the name of the connection. (in the screen below it would be: PP)
 
 
-Installation - Ubuntu 11.04/11.10
-------------------
+Installation under Ubuntu 11.04/11.10
+---------------------------------
 
 Since Ubuntu 11.04 doesn't use python3 and Gtk3 by default, you'll need to 
 do some crazy things to get this tool working here. (in later versions 
-e.g. 11.10 you can just install ""python3.2"" and ""python2-gobject"" 
+e.g. 11.10 you can just install **python3.2** and **python2-gobject** 
 and start having fun!)
 
 1) First of all, make sure that your VPN connection is "avaliable for all users":
@@ -80,10 +80,10 @@ libffi6 and python3-gobject
 <pre>python3.2 pptool.py</pre>
 
 
-Installation - Gnome 3 with Archlinux or Fedora
+Installation under Gnome 3 with Archlinux or Fedora
 -----------------------------------------------
 
-Gnome 3 comes with GTK+3 but you'll possibliy need (Archlinux):
+Gnome 3 comes with GTK+3 but you'll possibly need (Archlinux):
 <pre>pacman -S python python-gobject</pre>
 
 In Fedora it would be:
@@ -102,6 +102,7 @@ Gnome3/Archlinux:
 Ubuntu 11.10:
 
 ![](http://i.imgur.com/vlV8x.png)
+
 
 Issues or Suggestions?
 ----------------------
