@@ -74,7 +74,8 @@ sudo apt-get install gir1.2-gtk-3.0 libgtk-3-0 libcanberra-gtk3-0 python3.2
 
 3) You'll also need python3-gobject but since it's not in the 11.04 repositories, 
 you have to download and install manually:
-libffi6 and python3-gobject
+
+[libffi6](http://packages.ubuntu.com/de/oneiric/libffi6) and [python3-gobject](http://packages.ubuntu.com/de/oneiric/python3-gobject)
 
 4) You've done it! Now, you can start the tool using
 <pre>python3.2 pptool.py</pre>
