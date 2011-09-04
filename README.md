@@ -52,13 +52,19 @@ Important Notes
 Please note that you need to create a  working PP VPN-Connection 
 (see http://goo.gl/D84IG for help) to use this tool.
 
-""Ubuntu 11.04""
+On first run you are asked to insert the name of the connection. (in the screen below it would be: PP)
+
+
+Ubuntu 11.04/11.10
+------------------
+
 Since Ubuntu 11.04 doesn't use python3 and Gtk3 by default, you'll need to 
 do some freaky stuff to get this tool working here. (in later versions 
 e.g. 11.10 you can just install ""python3.2"" and ""python2-gobject"" 
 and start having fun!)
 
 1) First of all, make sure that your VPN connection is "avaliable for all users":
+
 ![](http://i.imgur.com/47hRt.png)
 
 2) Then, install the following using the terminal:
@@ -72,8 +78,6 @@ libffi6 and python3-gobject
 
 4) You've done it! Now, you can start the tool using
 <pre>python3.2 pptool.py</pre>
-
-On first run you are asked to insert the name of the connection. (in the case above it would be: PP)
 
 
 Screenshots
