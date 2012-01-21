@@ -6,7 +6,7 @@ P^2 Config Tool
 * Version:   0.2
 * GitHub:    <https://github.com/pylight/P-2-Config-Tool>
 * [German Blogpost](http://ganz-sicher.net/blog/programmierung-scripting/perfect-privacy-tool-fur-den-networkmanager-p2-vpn-config-tool/)
-* Dependecies: gksu, networkmanager, nmcli, python3, python3-gobject
+* Dependecies: gksu, networkmanager with a PP-VPN connection (openvpn or pptp), nmcli, python3, python3-gobject
 
 This free software is copyleft licensed under the GPL license.
 
@@ -55,29 +55,17 @@ Please note that you need to create a **working PP VPN-Connection**
 On first run you are asked to insert the name of the connection. (in the screen below it would be: PP)
 
 
-Installation under Ubuntu 11.04/11.10
+Installation under Ubuntu
 ---------------------------------
 
-Since Ubuntu 11.04 doesn't use python3 and Gtk3 by default, you'll need to 
-do some crazy things to get this tool working here. (in later versions 
-e.g. 11.10 you can just install **python3.2** and **python2-gobject** 
-and start having fun!)
+Ubuntu 11.04: [see wiki](https://github.com/pylight/P-2-Config-Tool/wiki/Installation-%28Ubuntu-11.04%29)
 
-1) First of all, make sure that your VPN connection is "avaliable for all users":
+Ubuntu 11.10 and later:
 
-![](http://i.imgur.com/47hRt.png)
+You'll need python3.2 and python3-gobject:
+<pre>sudo apt-get install python3.2 python3-gobject</pre>
 
-2) Then, install the following using the terminal:
-<pre>
-sudo apt-get install gir1.2-gtk-3.0 libgtk-3-0 libcanberra-gtk3-0 python3.2
-</pre>
-
-3) You'll also need python3-gobject but since it's not in the 11.04 repositories, 
-you have to download and install manually:
-[libffi6](http://packages.ubuntu.com/de/oneiric/libffi6) and [python3-gobject](http://packages.ubuntu.com/de/oneiric/python3-gobject)
-
-4) Awesome, you've done it! Now, you can start the tool using
-<pre>python3.2 pptool.py</pre>
+Create an PP VPN-Connection (openvpn or pptp) with your username and password, start the tool and follow the configuration process.
 
 
 Installation under Gnome 3 with Archlinux or Fedora
