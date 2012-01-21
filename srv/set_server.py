@@ -12,19 +12,29 @@ def main():
 		print("Error: This function needs root permissions!")
 		sys.exit()
 
-	filename = str(sys.argv[1])
-	newserver = str(sys.argv[2])
+	fileName = str(sys.argv[1])
+	newServer = str(sys.argv[2])
 
 	vpnconf = configparser.RawConfigParser()
-	vpnconf.read(filename)
-	gateway = vpnconf.get("vpn", "gateway")
+	vpnconf.read(fileName)
+	
+	# get vpn type
+	serverString = "gateway"
+	sType = vpnconf.get("vpn", "service-type")
+	if sType.endswith(".openvpn"):
+		serverString = "remote"
+	elif not sType.endswith(".pptp"):
+		print("Warning: Unsupported VPN-Type! (" + sType + ") Please use pptp or openvpn.")
+	
+	# get old server
+	oldServer = vpnconf.get("vpn", serverString)
 
-	if gateway != newserver:
+	if oldServer != newServer:
 		# Set new server
-		print("Changing PP server from " + gateway + " to " + newserver)
-		vpnconf.set("vpn", "gateway", newserver)
+		print("Changing PP server from " + oldServer + " to " + newServer)
+		vpnconf.set("vpn", serverString, newServer)
 		
-		with open(filename, 'w') as configfile:
+		with open(fileName, 'w') as configfile:
 			vpnconf.write(configfile)
 		print("New Server written to configuration.")
 	else:
