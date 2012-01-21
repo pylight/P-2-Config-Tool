@@ -100,5 +100,5 @@ Issues or Suggestions?
 ----------------------
 
 This tool is in a very early stage of development so I'm happy about 
-every comment, suggest and your ideas! Please feel free to contact me 
-here or via E-Mail. =)
+every comment, suggest and your ideas! If you've problems using this tool,
+please create an [issue](https://github.com/pylight/P-2-Config-Tool/issues/new).
