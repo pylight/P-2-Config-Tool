@@ -20,39 +20,18 @@ List of Changes:
 [0.2]	Tray Icon added to hide/show tool
 
 
-Usage:
-------
+Screenshots
+------------
 
-You will need to have an active Perfect Privacy account and you have to 
-set up a PP VPN connection in NetworkManager with your login data. The 
-tool will help you switch between the different PP-Servers quickly, but 
-it doesn't *create* the VPN-Configuration at the moment.
+Gnome3/Archlinux:
 
-To start the tool, just execute the  pptool.py Script with python from 
-the terminal, eg. on Archlinux:
+![](http://i.imgur.com/fIED5.jpg)
 
-	python3.2 pptool.py
-	
-On first run, the tool will ask for some settings, so the terminal is 
-needed here. You can later start the GUI without an open terminal of course.
+![](http://i.imgur.com/grlZu.jpg)
 
-You could for example place a bash script in your /usr/bin like this
-to run the tool easier:
-<pre>
-#!/bin/bash
+Ubuntu 11.10:
 
-cd /path/folder/with/script
-python3.2 pptool.py
-</pre>
-
-
-Important Notes
----------------
-
-Please note that you need to create a **working PP VPN-Connection** 
-(see http://goo.gl/D84IG for help) to use this tool.
-
-On first run you are asked to insert the name of the connection. (in the screen below it would be: PP)
+![](http://i.imgur.com/vlV8x.png)
 
 
 Installation under Ubuntu
@@ -78,18 +57,43 @@ In Fedora it would be:
 <pre>yum install python3 python3-gobject</pre>
 
 
-Screenshots
-------------
+Usage:
+------
 
-Gnome3/Archlinux:
+You will need to have an active Perfect Privacy account and you have to 
+set up a PP VPN connection in NetworkManager (pptp and openvpn-connections 
+are supported) with your login data. The 
+tool will help you switch between the different PP-Servers quickly, but 
+it doesn't *create* the VPN-Configuration at the moment.
 
-![](http://i.imgur.com/fIED5.jpg)
+Get the files with git and go to the project folder:
+	
+	git clone git://github.com/pylight/P-2-Config-Tool.git
+	cd P-2-Config-Tool
 
-![](http://i.imgur.com/grlZu.jpg)
+To start the tool, just execute the  pptool.py Script with python from 
+the terminal, eg. on Archlinux:
 
-Ubuntu 11.10:
+	python3.2 pptool.py
+	
 
-![](http://i.imgur.com/vlV8x.png)
+Configuration:
+-------------
+
+Please note that you need to create a **working PP VPN-Connection** 
+(see http://goo.gl/D84IG for help) before you use this tool.
+
+On first run, the tool will ask for some settings, so the terminal is 
+needed here. You can later start the GUI without an open terminal of course.
+
+You could for example place a bash script in your /usr/bin like this
+to run the tool easier:
+<pre>
+#!/bin/bash
+
+cd /path/folder/with/script
+python3.2 pptool.py
+</pre>
 
 
 Issues or Suggestions?
