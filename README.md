@@ -2,13 +2,10 @@ P^2 Config Tool
 ===============
 
 * Author:    Sven K. (<admin@ganz-sicher.net>)
-* Date:      August, 2011
-* Version:   0.2
 * GitHub:    <https://github.com/pylight/P-2-Config-Tool>
+* License: See LICENCE
 * [German Blogpost](http://ganz-sicher.net/blog/programmierung-scripting/perfect-privacy-tool-fur-den-networkmanager-p2-vpn-config-tool/)
 * Dependecies: gksu, networkmanager with a PP-VPN connection (openvpn or pptp), nmcli, python3, python3-gobject
-
-This free software is copyleft licensed under the GPL license.
 
 The goal of this little tool is to make switching between Perfect 
 Privacy-Servers (http://perfect-privacy.com/) easier with Networkmanager / 
