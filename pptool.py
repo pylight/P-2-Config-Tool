@@ -8,7 +8,7 @@
 	#																			#
 	#############################################################################
 
-version = "v0.2"
+version = "v0.21"
 desc = "Little config tool for Perfect Privacy / Gnome Network Manager to change the VPN servers quickly! :)"
 
 import os, sys, configparser, webbrowser

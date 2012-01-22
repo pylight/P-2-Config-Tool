@@ -27,26 +27,51 @@ def infoDialog(message):
 
 # simple input dialog, returns input
 def questionDialog(message, defaultInput):
-	idDialog = Gtk.MessageDialog(None, Gtk.DialogFlags.DESTROY_WITH_PARENT, Gtk.MessageType.QUESTION, Gtk.ButtonsType.NONE, message)
+	dialog = Gtk.MessageDialog(None, Gtk.DialogFlags.DESTROY_WITH_PARENT, Gtk.MessageType.QUESTION, Gtk.ButtonsType.NONE, message)
 	
-	idDialog.add_button("Cancel", Gtk.ResponseType.CLOSE);
-	idDialog.add_button("OK", Gtk.ResponseType.OK);
+	dialog.add_button("Cancel", Gtk.ResponseType.CLOSE);
+	dialog.add_button("OK", Gtk.ResponseType.OK);
 
 	inputField = Gtk.Entry()
 	inputField.set_text(defaultInput)
-	action_area = idDialog.get_content_area()
+	action_area = dialog.get_content_area()
 	action_area.add(inputField)
 
-	idDialog.connect("response", dialog_response)
+	dialog.connect("response", dialog_response)
 
-	idDialog.show_all()
-	idDialog.run()
+	dialog.show_all()
+	dialog.run()
 	
 	while len(inputField.get_text()) == 0:
 			errorDialog("Please enter something. :/")
-			idDialog.run()
+			dialog.run()
 	
 	conID = inputField.get_text()
-	idDialog.destroy()
+	dialog.destroy()
 	
 	return conID
+
+
+# simple dialog with dropdown option field, returns the choices as string
+def choiceDialog(message, choices):
+	dialog = Gtk.MessageDialog(None, Gtk.DialogFlags.DESTROY_WITH_PARENT, Gtk.MessageType.QUESTION, Gtk.ButtonsType.NONE, message)
+	
+	dialog.add_button("Cancel", Gtk.ResponseType.CLOSE);
+	dialog.add_button("OK", Gtk.ResponseType.OK);
+	
+	# create dropdown box
+	box = Gtk.ComboBoxText()
+	for item in choices:
+		box.append_text(item)
+	box.set_active(0)
+	
+	# add to dialoh
+	action_area = dialog.get_content_area()
+	action_area.add(box)
+	dialog.show_all()
+	dialog.run()
+	
+	# get the choice and return it
+	choice = choices[box.get_active()]
+	dialog.destroy()
+	return choice

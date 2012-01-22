@@ -2,7 +2,7 @@
 # Filename: initConfig.py
 
 import configparser, os
-from dialogs import errorDialog, infoDialog, questionDialog
+from dialogs import errorDialog, infoDialog, questionDialog, choiceDialog
 from sys import exit
 
 # default config settings
@@ -11,7 +11,7 @@ defaultPath = "/etc/NetworkManager/system-connections/"
 defaultEditor = "gedit"
 defaultFile = "~/.ppvpntool.conf"
 
-
+# checks if the default path exists and else asks for another path 
 def checkPath(path, conID):
 	if(os.path.exists(path)):
 			print("Using " + path + " as vpn config path.")
@@ -32,6 +32,9 @@ def setID():
 	
 def setEditor():
 	return questionDialog("Please input your prefered (graphical) Editor:", defaultEditor)		
+
+def setvpnType():
+	return choiceDialog("Please choose the type of your VPN connection", ["pptp", "openvpn"])
 
 def setPath():
 	path = questionDialog("Invalid setting: please specify the NetworkManager path for VPN-Connection-Settings on your system.", defaultPath)
@@ -69,6 +72,13 @@ def checkConfig(config, path):
 		eCount = eCount + 1
 		config.set('General', 'editor', setEditor())
 
+	try:
+		config.get('General', 'type')
+	except configparser.NoOptionError as ex:
+		print("Error: (broken config)\n" + str(ex))
+		eCount = eCount + 1
+		config.set('General', 'type', setvpnType())
+
 	if eCount > 0:
 		print("Rewriting config file.")
 		with open(path, 'w') as configfile:
@@ -76,6 +86,8 @@ def checkConfig(config, path):
 	else:
 		print("Configuration read without errors.")
 	
+	
+# running whenever the tool starts
 def initConfig():
 	# try to read tool configuration
 	mainconfig = configparser.RawConfigParser()
@@ -91,12 +103,14 @@ def initConfig():
 		
 		# validate vpn config path and set editor
 		path = checkPath(path, conID)
+		vpntype = setvpnType()
 		editor = setEditor()
 
 		# write config file
 		mainconfig.add_section('General')
 		mainconfig.set('General', 'path', path)
 		mainconfig.set('General', 'connection', conID)
+		mainconfig.set('General', 'type', vpntype)
 		mainconfig.set('General', 'editor', editor)
 
 		with open(confpath, 'w') as configfile:
@@ -104,7 +118,6 @@ def initConfig():
 
 		infoDialog("The configuration was written to \n" + confpath)
 	
-		
 	print("Reading configuration...")
 	checkConfig(mainconfig, confpath)
 
