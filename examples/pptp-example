@@ -1,0 +1,21 @@
+# this is an NetworkManager config example for an pptp connection
+# nm config files are usually located at /etc/NetworkManager/system-conections
+
+[connection]
+id=PP
+uuid=<automatic generated uuid>
+type=vpn
+
+[vpn]
+service-type=org.freedesktop.NetworkManager.pptp
+password-flags=1
+require-mppe-128=yes
+mppe-stateful=yes
+user=<your PP username>
+refuse-eap=yes
+refuse-chap=yes
+gateway=kiev.perfect-privacy.com
+refuse-pap=yes
+
+[ipv4]
+method=auto
