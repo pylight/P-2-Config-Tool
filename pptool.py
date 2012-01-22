@@ -57,18 +57,17 @@ class VPNTool:
 		f.close()
 
 
-
 	""" Menu Items """
 	# disconnects the vpn connection if established
 	def stop_vpn(self, menuitem):
 		print("Disconnecting VPN...")
-		pStop = Popen("nmcli con down id " + mainconfig['General']['connection'], shell=True)
+		pStop = Popen("nmcli con down id " + mainconfig.get('General', 'connection'), shell=True)
 		pStop.wait()
 		self.infolabel.set_label("VPN Offline")
 
 	# "Edit File"-Menuentrys
 	def sysconfig_open(self, menuitem):
-		self.open_editor(mainconfig['General']['path'], True)
+		self.open_editor(mainconfig.get('General', 'path'), True)
 
 	def toolconfig_open(self, menuitem):
 		self.open_editor(confpath)
@@ -81,9 +80,9 @@ class VPNTool:
 		
 		# open the file with an editor
 		if root == True:
-			pEdit = Popen("gksu " + mainconfig['General']['editor'] + " " + filepath, shell=True)
+			pEdit = Popen("gksu " + mainconfig.get('General', 'editor') + " " + filepath, shell=True)
 		else:
-			pEdit = Popen(mainconfig['General']['editor'] + " " + filepath, shell=True)
+			pEdit = Popen(mainconfig.get('General', 'editor') + " " + filepath, shell=True)
 		pEdit.wait()
 		
 		# was the file changed?
@@ -127,7 +126,7 @@ class VPNTool:
 	def connect_vpn(self, button):
 		self.stop_vpn(self)
 		print("Connecting to VPN...")
-		pCon = Popen("nmcli con up id " + mainconfig['General']['connection'], shell=True)
+		pCon = Popen("nmcli con up id " + mainconfig.get('General', 'connection'), shell=True)
 		stat = pCon.wait()
 		if stat == 0:
 			self.infolabel.set_label("Connected to VPN")
@@ -137,7 +136,11 @@ class VPNTool:
 	# update PP gateway server
 	def set_new_server(self, combobox):
 		if combobox.get_active() != 0:		
-			Popen("gksu " + sys.executable + " srv/set_server.py "+ mainconfig['General']['path'] + " " + self.serverlist.get_active_text(), shell=True)
+			vpnType = mainconfig.get('General', 'type')
+			setServerCmd = "srv/set_server.py "+ mainconfig.get('General', 'path') + " " + self.serverlist.get_active_text() + " " + vpnType
+			if vpnType == "openvpn":
+				setServerCmd = setServerCmd + " " +  mainconfig.get('Openvpn', 'certfolder')
+			Popen("gksu " + sys.executable + " " + setServerCmd, shell=True)
 
 	# tray-icon-clcked: toogle window visibility
 	def toogle_visible(self, trayicon):
@@ -151,9 +154,7 @@ class VPNTool:
 		Gtk.main_quit()	
 
 
-
 def main():
-	
 	# init and read config
 	global mainconfig, confpath
 	confpath = os.path.expanduser("~/.ppvpntool.conf")

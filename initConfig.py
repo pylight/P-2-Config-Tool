@@ -41,10 +41,15 @@ def setPath():
 	if not os.path.exists(path):
 			errorDialog("Error: the path " + path + " doesn't exist. Please make sure you entered the right values, check the tool configuration (" + defaultFile + ") and rerun this tool!")
 			exit("Error: Setup failed (invalid VPN config path)")
-	
 	print("Using " + path + " as NM path.")
 	return path
 
+def setOvpnFolder():
+	path = questionDialog("You choose openvpn as connection type. PP Config Tool will use the openvpn configuration files from the PP member downloads. Please get that package (https://www.perfect-privacy.com/members/All.ovpn.ubuntu.zip), extract it and input the path of that folder below:", os.path.expanduser("~/Downloads/All.ovpn.ubuntu"))
+	if not os.path.exists(path):
+			errorDialog("Error: the path " + path + " doesn't exist. Please make sure you entered the right values, check the tool configuration (" + defaultFile + ") and rerun this tool!")
+			exit("Error: Setup failed (invalid VPN config path)")
+	return path
 
 # validate the config file
 def checkConfig(config, path):	
@@ -79,6 +84,16 @@ def checkConfig(config, path):
 		eCount = eCount + 1
 		config.set('General', 'type', setvpnType())
 
+	if config.get('General', 'type') == "openvpn":
+		try:
+			config.get('Openvpn', 'certfolder')
+		except configparser.NoSectionError:
+			config.add_section('Openvpn')
+			config.set('Openvpn', 'certfolder', setOvpnFolder())
+		except configparser.NoOptionError:
+			config.set('Openvpn', 'certfolder', setOvpnFolder())
+
+
 	if eCount > 0:
 		print("Rewriting config file.")
 		with open(path, 'w') as configfile:
@@ -112,6 +127,10 @@ def initConfig():
 		mainconfig.set('General', 'connection', conID)
 		mainconfig.set('General', 'type', vpntype)
 		mainconfig.set('General', 'editor', editor)
+
+		if mainconfig.get('General', 'type') == "openvpn":
+			mainconfig.add_section('Openvpn')
+			mainconfig.set('Openvpn', 'certfolder', setOvpnFolder())
 
 		with open(confpath, 'w') as configfile:
 			mainconfig.write(configfile)
