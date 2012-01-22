@@ -22,76 +22,6 @@ from initConfig import initConfig
 UI_FILE = "gui/window.ui"
 
 
-"""
-def readsettings():
-	global mainconfig, confpath
-	# try to read tool configuration
-	mainconfig = configparser.RawConfigParser()
-	confpath = os.path.expanduser("~/.ppvpntool.conf")
-
-	if (os.path.exists(confpath) == False):
-		print("\nConfigfile", confpath, "not found. Running Config Setup...")
-		conID = questionDialog("No (valid) config file at " + confpath + " found.\nPlease input the name (ID) of your VPN Connection", defaultID)
-
-		path = defaultPath + conID
-		
-		# validate vpn config path
-		if(os.path.exists(path)):
-			print("Using " + path + " as vpn config path.")
-			infoDialog("This Tool will look for your VPN Connection settings at " + path + ". If you need to change this, use the Tool Menu. (Connection -> Tool Settings)")
-		else:
-			print("Error: File not found at " + path)
-			nmPath = questionDialog("No file found at " + path + "\nPlease specify the NetworkManager path for VPN-Connection-Settings on your system.", defaultPath)
-			path = nmPath + conID
-			if not os.path.exists(path):
-				errorDialog("Error: no VPN configfile found at " + path + ". Please make sure you entered the right values and created the PP VPN connection in NetworkManager and rerun this tool!")
-				sys.exit("Error: Setup failed (invalid VPN config file)")
-
-		# set editor
-		editor = questionDialog("Please input your prefered (graphical) Editor:", defaultEditor)		
-
-		# write config file
-		mainconfig.add_section('General')
-		mainconfig.set('General', 'path', path)
-		mainconfig.set('General', 'connection', conID)
-		mainconfig.set('General', 'editor', editor)
-
-		with open(confpath, 'w') as configfile:
-			mainconfig.write(configfile)
-
-	print("Reading configuration...")
-	mainconfig.read(confpath)
-
-
-	if (os.path.exists(confpath) == False):
-		print("\nConfigfile", confpath, "not found. Running Config Setup...")
-		print("If you're not sure what your doing, choose the default settings by pressing the enter key!\n") 
-
-		# set configpath
-		while True:
-			while True:
-				mypath = input("Networkmanager Setings Path: [/etc/NetworkManager/system-connections/] ")		
-				if (os.path.exists(mypath) == False):
-					if(mypath == ""):
-						mypath = "/etc/NetworkManager/system-connections/"
-						break
-					else:
-						print("Invalid / not existing Path!")
-				else:
-					break
-		
-			# set connection Name
-			connection = input("Enter a name for the VPN conection (Networkmanager/Vpn connection file must exist!): [PP] ")		
-			if connection == "":	connection = "PP"
-
-			print("Your configuration is placed in", mypath + connection,"is that correct? [Y/n]", end=" ")
-			confirm = input()	
-			if confirm == "" or confirm == "y" or confirm == "Y":
-				break
-			
-				print("\nRestarting Setup...")
-"""
-
 
 class VPNTool:
 	def __init__(self):
@@ -129,7 +59,6 @@ class VPNTool:
 
 
 	""" Menu Items """
-
 	# disconnects the vpn connection if established
 	def stop_vpn(self, menuitem):
 		print("Disconnecting VPN...")
