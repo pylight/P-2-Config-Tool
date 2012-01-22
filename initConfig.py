@@ -59,28 +59,28 @@ def checkConfig(config, path):
 	try:
 		config.get('General', 'connection')
 	except configparser.NoOptionError as ex:
-		print("Error: (broken config)\n" + str(ex))
+		print("Warning: " + str(ex))
 		eCount = eCount + 1
 		config.set('General', 'connection', setID())
 
 	try:		
 		config.get('General', 'path')
 	except configparser.NoOptionError as ex:
-		print("Error: (broken config)\n" + str(ex))
+		print("Warning: " + str(ex))
 		eCount = eCount + 1
 		config.set('General', 'path', setPath())
 
 	try:
 		config.get('General', 'editor')
 	except configparser.NoOptionError as ex:
-		print("Error: (broken config)\n" + str(ex))
+		print("Warning: " + str(ex))
 		eCount = eCount + 1
 		config.set('General', 'editor', setEditor())
 
 	try:
 		config.get('General', 'type')
 	except configparser.NoOptionError as ex:
-		print("Error: (broken config)\n" + str(ex))
+		print("Warning: " + str(ex))
 		eCount = eCount + 1
 		config.set('General', 'type', setvpnType())
 
