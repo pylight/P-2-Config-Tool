@@ -15,6 +15,7 @@ under Gnome. P^2 Config Tool is developed for Python 3.x, using Glade and Gtk3.
 List of Changes:
 ----------------
 [0.21]	Openvpn support added
+
 [0.2]	Tray Icon added to hide/show tool
 
 
