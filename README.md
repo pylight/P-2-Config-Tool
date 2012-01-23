@@ -8,7 +8,7 @@ If you don't know how to download Projects from github, take a look at the [Firs
 * *License*: [see LICENCE](https://github.com/pylight/P-2-Config-Tool/blob/master/LICENSE)
 * *Dependecies*: gksu, networkmanager with a PP-VPN connection (openvpn or pptp), nmcli, python3, python3-gobject
 * *Screens*: [see Wiki](https://github.com/pylight/P-2-Config-Tool/wiki/Screenshots)
-* *Moar*: [German Blogpost](http://ganz-sicher.net/blog/programmierung-scripting/perfect-privacy-tool-fur-den-networkmanager-p2-vpn-config-tool/)
+* *Moar*: [German Blogpost](http://ganz-sicher.net/blog/programmierung-scripting/perfect-privacy-tool-fur-den-networkmanager-p2-vpn-config-tool/), [PP Forum Support-Thread](https://forum.perfect-privacy.com/showthread.php?p=19850)
 
 List of Changes:
 ----------------
