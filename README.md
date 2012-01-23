@@ -17,21 +17,6 @@ List of Changes:
 	[0.21]	Openvpn support added
 	[0.2]	Tray Icon added to hide/show tool
 
-
-Screenshots
-------------
-
-Gnome3/Archlinux:
-
-![](http://i.imgur.com/fIED5.jpg)
-
-![](http://i.imgur.com/grlZu.jpg)
-
-Ubuntu 11.10:
-
-![](http://i.imgur.com/vlV8x.png)
-
-
 Installation under Ubuntu
 ---------------------------------
 
