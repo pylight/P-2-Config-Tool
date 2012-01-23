@@ -1,6 +1,7 @@
 P^2 Config Tool
 ===============
-
+About
+-------
 * *Author*:    Sven K. (<admin@ganz-sicher.net>)
 * *GitHub*:    <https://github.com/pylight/P-2-Config-Tool>
 * *License*: [see LICENCE](https://github.com/pylight/P-2-Config-Tool/blob/master/LICENSE)
@@ -8,8 +9,6 @@ P^2 Config Tool
 * *Screens*: [see Wiki](https://github.com/pylight/P-2-Config-Tool/wiki/Screenshots)
 * *Moar*: [German Blogpost](http://ganz-sicher.net/blog/programmierung-scripting/perfect-privacy-tool-fur-den-networkmanager-p2-vpn-config-tool/)
 
-About
--------
 The goal of this little tool is to make switching between [Perfect Privacy](http://www.perfect-privacy.com)-Servers with NetworkManager VPN-Connections (pptp or openvpn) easier. 
 If you don't know how to download Projects from github, take a look at the [First steps](https://github.com/pylight/P-2-Config-Tool/wiki/First-Steps) wiki page. The general installation process can be found below.
 
