@@ -1,8 +1,6 @@
 P^2 Config Tool
 ===============
-About
--------
-The goal of this little tool is to make switching between [Perfect Privacy](http://www.perfect-privacy.com)-Servers with NetworkManager VPN-Connections (pptp or openvpn) easier. 
+This little tool makes switching between [Perfect Privacy](http://www.perfect-privacy.com)-Servers with NetworkManager VPN-Connections (pptp or openvpn) easier! 
 If you don't know how to download Projects from github, take a look at the [First steps](https://github.com/pylight/P-2-Config-Tool/wiki/First-Steps) wiki page. The general installation process can be found below.
 
 * *Author*:    Sven K. (<admin@ganz-sicher.net>)
@@ -20,15 +18,14 @@ List of Changes:
 Installation under Ubuntu
 ---------------------------------
 
-Ubuntu 11.04: [see wiki](https://github.com/pylight/P-2-Config-Tool/wiki/Installation-%28Ubuntu-11.04%29)
-
-Ubuntu 11.10 and later:
+*Ubuntu 11.10 and later*:
 
 You'll need python3.2 and python3-gobject:
 <pre>sudo apt-get install python3.2 python3-gobject</pre>
 
 Create an PP VPN-Connection (openvpn or pptp) with your username and password, start the tool and follow the configuration process.
 
+*Ubuntu 11.04*: [see wiki](https://github.com/pylight/P-2-Config-Tool/wiki/Installation-%28Ubuntu-11.04%29)
 
 Installation under Gnome 3 with Archlinux or Fedora
 -----------------------------------------------
