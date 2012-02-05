@@ -14,7 +14,7 @@ desc = "Little config tool for Perfect Privacy / Gnome Network Manager to change
 import os, sys, configparser, webbrowser
 from gi.repository import Gtk
 from urllib.request import urlopen 
-from subprocess import Popen
+from subprocess import Popen, getoutput
 
 # own modules
 from initConfig import initConfig
@@ -48,13 +48,35 @@ class VPNTool:
 
 	# get the list of avaliable pp-servers from github
 	def getservers(self):
-		f = urlopen("https://raw.github.com/pylight/P-2-Config-Tool/master/srv/servers.list")
+		self.currentServer = self.getCurrentServer()
+		cIndex = i = 0		# pos. of the server in the serverlist
+	
+		f = open("./srv/servers.list", 'r')
 		servers = f.readlines()
 		for url in servers:
-			self.serverlist.append_text(url.decode("utf-8").rstrip())
-		
-		self.serverlist.set_active(0)
+			i += 1
+			server = url.rstrip()
+			self.serverlist.append_text(server)
+			if server == self.currentServer:
+				cIndex = i
+					
+		self.serverlist.set_active(cIndex)
 		f.close()
+
+	# gets the current server url from nmcli and returns it if possible
+	def getCurrentServer(self):
+		out = getoutput("nmcli con list id " + mainconfig.get('General', 'connection'))
+		outlist = out.splitlines()
+		for i in range(0, len(outlist)):
+			if outlist[i].startswith("vpn.data: "):
+				vpnData = outlist[i].replace(' ', '').split(',')
+				for n in range(0, len(vpnData)):
+					if vpnData[n].startswith("gateway="):	# pptp
+						return vpnData[n][8:]
+					if vpnData[n].startswith("remote="):	# openvpn
+						return vpnData[n][7:]
+				break
+		return ""
 
 
 	""" Menu Items """
@@ -110,7 +132,7 @@ class VPNTool:
 		self.about_dialog.set_program_name("PP VPN Config Tool")
 		self.about_dialog.set_version(version)
 		self.about_dialog.set_comments(desc)
-		self.about_dialog.set_logo_icon_name("applications-internet")
+		#self.about_dialog.set_logo_icon("gui/pptool.ico")
 		self.about_dialog.set_website("https://github.com/pylight/P-2-Config-Tool")
 		self.about_dialog.connect("response", self.about_close)
 		self.about_dialog.show_all()
@@ -129,18 +151,21 @@ class VPNTool:
 		pCon = Popen("nmcli con up id " + mainconfig.get('General', 'connection'), shell=True)
 		stat = pCon.wait()
 		if stat == 0:
-			self.infolabel.set_label("Connected to VPN")
+			serverInfo = self.currentServer.partition('.')[0]
+			self.infolabel.set_label("Connected to " + serverInfo)
 		else:
 			self.infolabel.set_label("Error: Couldn't connect to server!")
 		
 	# update PP gateway server
 	def set_new_server(self, combobox):
-		if combobox.get_active() != 0:		
+		newserver = self.serverlist.get_active_text()
+		if combobox.get_active() != 0 and newserver != self.currentServer:		
 			vpnType = mainconfig.get('General', 'type')
-			setServerCmd = "srv/set_server.py "+ mainconfig.get('General', 'path') + " " + self.serverlist.get_active_text() + " " + vpnType
+			setServerCmd = "srv/set_server.py "+ mainconfig.get('General', 'path') + " " + newserver + " " + vpnType
 			if vpnType == "openvpn":
 				setServerCmd = setServerCmd + " " +  mainconfig.get('Openvpn', 'certfolder')
 			Popen("gksu " + sys.executable + " " + setServerCmd, shell=True)
+			self.currentServer = newserver
 
 	# tray-icon-clcked: toogle window visibility
 	def toogle_visible(self, trayicon):
