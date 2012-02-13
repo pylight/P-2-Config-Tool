@@ -1,3 +1,11 @@
+#
+# P^2 Config Tool Serverlist
+# This file contains the list of the perfect privacy servers
+# you can add or remove servers below if you need to
+# Rules:
+# - one server per Line
+# - pattern: <servername>.perfect-privacy.com 
+#
 amsterdam.perfect-privacy.com
 amsterdam1.perfect-privacy.com
 amsterdam2.perfect-privacy.com
@@ -8,6 +16,7 @@ brisbane.perfect-privacy.com
 bucharest.perfect-privacy.com
 bucharest1.perfect-privacy.com
 bucharest2.perfect-privacy.com
+buenosaires.perfect-privacy.com
 cairo.perfect-privacy.com
 chicago.perfect-privacy.com
 cyberjaya.perfect-privacy.com
@@ -27,6 +36,7 @@ london.perfect-privacy.com
 london1.perfect-privacy.com
 london2.perfect-privacy.com
 london3.perfect-privacy.com
+losangeles.perfect-privacy.com
 montreal.perfect-privacy.com
 montreal1.perfect-privacy.com
 montreal2.perfect-privacy.com
