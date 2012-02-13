@@ -6,14 +6,10 @@ If you don't know how to download Projects from github, take a look at the [Firs
 * *Author*:    Sven K. (<admin@ganz-sicher.net>)
 * *GitHub*:    <https://github.com/pylight/P-2-Config-Tool>
 * *License*: [see LICENCE](https://github.com/pylight/P-2-Config-Tool/blob/master/LICENSE)
+* *Changelog*: see [CHANGELOG](https://github.com/pylight/P-2-Config-Tool/blob/master/CHANGELOG)
 * *Dependecies*: gksu, networkmanager with a PP-VPN connection (openvpn or pptp), nmcli, python3, python3-gobject
 * *Screens*: [see Wiki](https://github.com/pylight/P-2-Config-Tool/wiki/Screenshots)
-* *Moar*: [German Blogpost](http://ganz-sicher.net/blog/programmierung-scripting/perfect-privacy-tool-fur-den-networkmanager-p2-vpn-config-tool/), [PP Forum Support-Thread](https://forum.perfect-privacy.com/showthread.php?p=19850)
-
-List of Changes:
-----------------
-	[0.21]	Openvpn support added
-	[0.2]	Tray Icon added to hide/show tool
+* *Moar*: [German Blogpost](http://ganz-sicher.net/blog/programmierung-scripting/perfect-privacy-tool-fur-den-networkmanager-p2-vpn-config-tool/), [PP Forum Support-Thread](https://forum.perfect-privacy.com/showthread.php?t=2957)
 
 Installation under Ubuntu
 ---------------------------------
