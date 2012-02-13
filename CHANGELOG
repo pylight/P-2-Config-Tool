@@ -1,0 +1,12 @@
+0.3
+	* menu ui changed, custom trayicon and logo 
+	* trayicon indicates connection status now
+	* use local serverlist (for faster startup)
+	* current server is recognized at startup
+0.21
+	* openvpn support added
+	* graphical setup process
+0.2
+	* tray icon added to hide/show tool
+0.1
+	* core functions working
