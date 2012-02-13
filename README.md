@@ -1,4 +1,4 @@
-P^2 Config Tool
+P² Config Tool
 ===============
 This little tool makes switching between [Perfect Privacy](http://www.perfect-privacy.com)-Servers with NetworkManager VPN-Connections (pptp or openvpn) easier! 
 If you don't know how to download Projects from github, take a look at the [First steps](https://github.com/pylight/P-2-Config-Tool/wiki/First-Steps) wiki page. The general installation process can be found below.
