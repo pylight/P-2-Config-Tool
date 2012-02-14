@@ -101,8 +101,9 @@ class VPNTool:
 		# check if vpn connection is active
 		if check:
 			for i in range(0, len(outlist)):
+								
 				conInfo = outlist[i].rsplit()
-				if conInfo[0] == mainconfig.get('General', 'connection'):
+				if len(conInfo) > 0 and conInfo[0] == mainconfig.get('General', 'connection'):
 					self.tray.set_from_file("./gui/trayicon2.svg")
 					self.infolabel.set_label("Connected to " + self.currentServer.split('.')[0])
 					return True
@@ -219,7 +220,6 @@ class VPNTool:
 	# close app
 	def destroy(self, window):
 		Gtk.main_quit()	
-
 
 def main():
 	# init and read config
