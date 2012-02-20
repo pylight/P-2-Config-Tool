@@ -1,3 +1,8 @@
+0.314159265
+	* reconnect bugfix: wait for disconnect to finish (cased connection errors)
+	* bugfix: show right server in the connection status area
+	* added an connection infobar at the bottom (menu-info was not visible on ubuntu e.g.)
+	* some refactoring (function/variable names)
 0.3
 	* menu ui changed, custom trayicon and logo 
 	* trayicon indicates connection status now

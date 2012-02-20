@@ -8,7 +8,7 @@
 	#																			#
 	#############################################################################
 
-version = "v0.3"
+version = "v0.314159265"
 desc = "Little config tool for Perfect Privacy / Gnome Network Manager to change the VPN servers quickly! :)"
 
 import os, sys, configparser, webbrowser
@@ -30,25 +30,26 @@ class VPNTool:
 
 		# get objects
 		self.window = self.builder.get_object('window')
-		self.infolabel = self.builder.get_object('menuitem3')
+		self.infolabel = self.builder.get_object('labelinfo')
+		self.statuslabel = self.builder.get_object('labelonoff')
 		self.serverlist = self.builder.get_object('serverlist')
 
 		print("Little PP Config Tool " + version + " started!")
-		self.getservers()
+		self.getServers()
 
 		# set up tray icon
 		self.tray = Gtk.StatusIcon()
 		self.tray.set_visible(False)
 		self.tray.set_from_file("./gui/trayicon.svg")
-		self.tray.connect("activate", self.toogle_visible)
+		self.tray.connect("activate", self.iconToogleVisibility)
 		self.checkVPN()
-		GObject.timeout_add(3*1000, self.checkVPN)	# check vpn status every 5 seconds
+		GObject.timeout_add(3500, self.checkVPN)	# check vpn status every 3.5 seconds
 		
 		self.window.show_all()
 		self.tray.set_visible(True)
 
 	# get the list of avaliable pp-servers from github
-	def getservers(self):
+	def getServers(self):
 		self.currentServer = self.getCurrentServer()
 		cIndex = i = 0		# pos. of the server in the serverlist
 	
@@ -101,35 +102,42 @@ class VPNTool:
 		# check if vpn connection is active
 		if check:
 			for i in range(0, len(outlist)):
-								
 				conInfo = outlist[i].rsplit()
 				if len(conInfo) > 0 and conInfo[0] == mainconfig.get('General', 'connection'):
 					self.tray.set_from_file("./gui/trayicon2.svg")
-					self.infolabel.set_label("Connected to " + self.currentServer.split('.')[0])
+					if not hasattr(self, 'connectionInfo'):
+						self.connectionInfo = " Connected to VPN. " # TODO: get dnsname with nslookup
+					self.infolabel.set_label(self.connectionInfo)
+					self.statuslabel.set_label('<span color="darkgreen"> online </span>')
 					return True
 		# inactive
-		self.infolabel.set_label("VPN Offline")
+		self.infolabel.set_label(" - ")
+		self.statuslabel.set_label('<span color="darkred"> offline </span>')
 		self.tray.set_from_file("./gui/trayicon.svg")
+		
+		if hasattr(self, 'nextConnect') and self.nextConnect and not self.pStop.poll() == None:
+			self.doConnect()
+			self.nextConnect = False
 		return True
 
 	""" Menu Items """
 	# disconnects the vpn connection if established
-	def stop_vpn(self, menuitem):
+	def stopVPN(self, menuitem):
 		print("Disconnecting VPN...")
-		pStop = Popen("nmcli con down id " + mainconfig.get('General', 'connection'), shell=True)
+		self.pStop = Popen("nmcli con down id " + mainconfig.get('General', 'connection'), shell=True)
 
 	# "Edit File"-Menuentrys
-	def sysconfig_open(self, menuitem):
-		self.open_editor(mainconfig.get('General', 'path'), True)
+	def openSysConfig(self, menuitem):
+		self.openEditor(mainconfig.get('General', 'path'), True)
 
-	def toolconfig_open(self, menuitem):
-		self.open_editor(confpath)
+	def openToolConfig(self, menuitem):
+		self.openEditor(confpath)
 
-	def serverlist_open(self, menuitem):
-		self.open_editor("./srv/servers.list")
+	def openServerlist(self, menuitem):
+		self.openEditor("./srv/servers.list")
 
 	# Open File with editor and check for changes afterwards
-	def open_editor(self, filepath, root=False):
+	def openEditor(self, filepath, root=False):
 		# get "last modified" date
 		watcher = os.stat(filepath)
 		self.last_modified = watcher.st_mtime
@@ -142,21 +150,21 @@ class VPNTool:
 		pEdit.wait()
 		
 		# was the file changed?
-		self.check_changes(filepath)
+		self.checkChanges(filepath)
 
 	# check for file changes
-	def check_changes(self, file):
+	def checkChanges(self, file):
 		watcher = os.stat(file)
-		this_modified = watcher.st_mtime
+		modificationTime = watcher.st_mtime
 		
 		# if modified, restart tool to get new settings
-		if this_modified > self.last_modified:
+		if modificationTime > self.last_modified:
 			print("File edited - restarting!")
 			python = sys.executable
 			os.execl(python, python, * sys.argv)
 
 	# open the server status-website with the default browser
-	def open_infopage(self, menuitem):
+	def openInfopage(self, menuitem):
 		label = menuitem.get_label()
 		if label == "PP Server Status Page":
 			url = "https://www.perfect-privacy.com/members/server.html"
@@ -169,9 +177,20 @@ class VPNTool:
 			return		
 		webbrowser.open(url, new=0)
 
+	# show/hide connection status info
+	def toggleStatus(self, menuitem):
+		self.infobox = self.builder.get_object('statusbox')
+		self.togglelabel = self.builder.get_object('labeltogglestatus')
+		
+		if self.infobox.get_visible():
+			self.infobox.hide()
+			self.togglelabel.set_label("Show connection status")
+		else:
+			self.infobox.show()
+			self.togglelabel.set_label("Hide connection status")
 		
 	# show about dialog
-	def about_clicked(self, window):
+	def aboutClicked(self, window):
 		self.about_dialog = Gtk.AboutDialog()
 		self.about_dialog.set_title("About")
 		self.about_dialog.set_program_name("PP VPN Config Tool")
@@ -184,23 +203,29 @@ class VPNTool:
 		self.about_dialog.set_comments(desc)
 		self.about_dialog.set_website("https://github.com/pylight/P-2-Config-Tool")
 		
-		self.about_dialog.connect("response", self.about_close)
+		self.about_dialog.connect("response", self.aboutClose)
 		self.about_dialog.show_all()
 
 	# close the about dialog
-	def about_close(self, about_dialog, resid):
+	def aboutClose(self, about_dialog, resid):
 		self.about_dialog.destroy()
 
 	
 	""" Buttons - Server connection (Apply) and Close """
 	# Apply / (Re)Connect VPN
-	def connect_vpn(self, button):
-		self.stop_vpn(self)
-		print("Connecting to VPN...")
+	# because we have to wait for the end of the disconnect, the actual doConnect-call will be in 
+	# the frequently checkVPN function
+	def reconnect(self, button):
+		self.stopVPN(self)	# disconnect
+		self.nextConnect = True 
+	
+	def doConnect(self):
+		print("Connecting to VPN...")	
 		self.pCon = Popen("nmcli con up id " + mainconfig.get('General', 'connection'), shell=True)
-		
+		self.connectionInfo = " Connected to " + self.currentServer.split('.')[0] + ". "
+	
 	# update PP gateway server
-	def set_new_server(self, combobox):
+	def setNewServer(self, combobox):
 		newserver = self.serverlist.get_active_text()
 		if combobox.get_active() != 0 and newserver != self.currentServer:		
 			vpnType = mainconfig.get('General', 'type')
@@ -211,7 +236,7 @@ class VPNTool:
 			self.currentServer = newserver
 
 	# tray-icon-clcked: toogle window visibility
-	def toogle_visible(self, trayicon):
+	def iconToogleVisibility(self, trayicon):
 		if self.window.get_visible():
 			self.window.hide()
 		else:

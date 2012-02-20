@@ -29,6 +29,16 @@
     <property name="can_focus">False</property>
     <property name="stock">gtk-edit</property>
   </object>
+  <object class="GtkImage" id="image6">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-index</property>
+  </object>
+  <object class="GtkImage" id="image7">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-connect</property>
+  </object>
   <object class="GtkWindow" id="window">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">PP Config Tool</property>
@@ -41,7 +51,7 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">10</property>
+        <property name="spacing">5</property>
         <child>
           <object class="GtkMenuBar" id="menubar1">
             <property name="visible">True</property>
@@ -58,6 +68,18 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
+                      <object class="GtkImageMenuItem" id="menuitem1">
+                        <property name="label" translatable="yes">(Re)connect</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="image">image7</property>
+                        <property name="use_stock">False</property>
+                        <property name="always_show_image">True</property>
+                        <signal name="activate" handler="reconnect" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem2">
                         <property name="label">Disconnect VPN</property>
                         <property name="use_action_appearance">False</property>
@@ -66,7 +88,7 @@
                         <property name="image">image1</property>
                         <property name="use_stock">False</property>
                         <property name="always_show_image">True</property>
-                        <signal name="activate" handler="stop_vpn" swapped="no"/>
+                        <signal name="activate" handler="stopVPN" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -88,7 +110,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">PP Server Status Page</property>
-                                <signal name="activate" handler="open_infopage" swapped="no"/>
+                                <signal name="activate" handler="openInfopage" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -98,7 +120,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">PP CheckIP</property>
                                 <property name="use_underline">True</property>
-                                <signal name="activate" handler="open_infopage" swapped="no"/>
+                                <signal name="activate" handler="openInfopage" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -108,7 +130,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Extended IP Info</property>
                                 <property name="use_underline">True</property>
-                                <signal name="activate" handler="open_infopage" swapped="no"/>
+                                <signal name="activate" handler="openInfopage" swapped="no"/>
                               </object>
                             </child>
                           </object>
@@ -139,7 +161,7 @@
                         <property name="image">image2</property>
                         <property name="use_stock">False</property>
                         <property name="always_show_image">True</property>
-                        <signal name="activate" handler="sysconfig_open" swapped="no"/>
+                        <signal name="activate" handler="openSysConfig" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -151,7 +173,7 @@
                         <property name="image">image4</property>
                         <property name="use_stock">False</property>
                         <property name="always_show_image">True</property>
-                        <signal name="activate" handler="toolconfig_open" swapped="no"/>
+                        <signal name="activate" handler="openToolConfig" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -163,7 +185,34 @@
                         <property name="image">image5</property>
                         <property name="use_stock">False</property>
                         <property name="always_show_image">True</property>
-                        <signal name="activate" handler="serverlist_open" swapped="no"/>
+                        <signal name="activate" handler="openServerlist" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="menuitemview">
+                <property name="use_action_appearance">False</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">_View</property>
+                <property name="use_underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu" id="menu4">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkImageMenuItem" id="labeltogglestatus">
+                        <property name="label" translatable="yes">Hide connection status</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="image">image6</property>
+                        <property name="use_stock">False</property>
+                        <property name="always_show_image">True</property>
+                        <signal name="activate" handler="toggleStatus" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -190,21 +239,11 @@
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <property name="always_show_image">True</property>
-                        <signal name="activate" handler="about_clicked" swapped="no"/>
+                        <signal name="activate" handler="aboutClicked" swapped="no"/>
                       </object>
                     </child>
                   </object>
                 </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkMenuItem" id="menuitem3">
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can_focus">False</property>
-                <property name="right_justified">True</property>
-                <property name="label" translatable="yes">Connection Status</property>
               </object>
             </child>
           </object>
@@ -247,7 +286,7 @@
                         <items>
                           <item translatable="yes">- Select Server -</item>
                         </items>
-                        <signal name="changed" handler="set_new_server" swapped="no"/>
+                        <signal name="changed" handler="setNewServer" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -269,19 +308,22 @@
             </child>
             <child>
               <object class="GtkButton" id="button1">
-                <property name="label">gtk-apply</property>
+                <property name="label">Apply</property>
                 <property name="use_action_appearance">False</property>
+                <property name="width_request">3</property>
+                <property name="height_request">45</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
                 <property name="margin_right">5</property>
                 <property name="margin_top">3</property>
                 <property name="margin_bottom">3</property>
                 <property name="use_action_appearance">False</property>
-                <property name="use_stock">True</property>
                 <property name="focus_on_click">False</property>
                 <property name="xalign">0.50999999046325684</property>
-                <signal name="clicked" handler="connect_vpn" swapped="no"/>
+                <signal name="clicked" handler="reconnect" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -295,6 +337,84 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="statusbox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="spacing">15</property>
+            <child>
+              <object class="GtkLabel" id="label2">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="yalign">0</property>
+                <property name="xpad">3</property>
+                <property name="label" translatable="yes">Connection Status</property>
+                <attributes>
+                  <attribute name="foreground" value="#7d7d7d7d7d7d"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="labelonoff">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="xpad">2</property>
+                <property name="label" translatable="yes">&lt;span color="darkred"&gt; offline &lt;/span&gt;</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label4">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="xalign">1</property>
+                <property name="yalign">0</property>
+                <property name="label" translatable="yes">Server:</property>
+                <property name="justify">right</property>
+                <property name="width_chars">7</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="labelinfo">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="yalign">0</property>
+                <property name="label" translatable="yes">-</property>
+                <property name="width_chars">15</property>
+                <attributes>
+                  <attribute name="foreground" value="#00005b618b8b"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>
