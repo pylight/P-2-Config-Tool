@@ -44,7 +44,7 @@ class VPNTool:
 		
 		self.checkCounter = 0;	
 		self.checkVPN()
-		GObject.timeout_add(3300, self.checkVPN)	# check vpn status every 3.3 seconds
+		GObject.timeout_add(3500, self.checkVPN)	# check vpn status every 3.5 seconds
 		
 		
 		self.window.show_all()
@@ -106,9 +106,7 @@ class VPNTool:
 		vpnStatus = getoutput(python + " ./srv/vpn_status.py " + mainconfig.get('General', 'connection'))
 
 		if vpnStatus == "connected":
-			# for better performace, check only every 10 seconds if the ip changed
-			self.checkCounter = (self.checkCounter + 1) % 3
-			if self.checkCounter != 1:
+			if self.checkCounter == 1:
 				return True
 
 			# get the server name
@@ -120,13 +118,14 @@ class VPNTool:
 				self.infolabel.set_label(connectionInfo)
 				self.statuslabel.set_label(' <span color="darkgreen">online</span> ')
 				self.tray.set_from_file("./gui/trayicon2.svg")
-					
+				self.checkCounter = 1
 			return True
 		
 		# connecting
 		elif vpnStatus == "connecting":
 			self.statuslabel.set_label('<span color="orange">connecting</span>')
 			self.infolabel.set_label("-")
+			self.checkCounter = 0
 			return True
 
 		# (re)connect button was clicked
@@ -139,6 +138,7 @@ class VPNTool:
 		self.infolabel.set_label("-")
 		self.statuslabel.set_label(' <span color="darkred">offline</span> ')
 		self.tray.set_from_file("./gui/trayicon.svg")
+		self.checkCounter = 0
 		return True
 
 	""" Menu Items """
