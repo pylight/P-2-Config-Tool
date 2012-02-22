@@ -33,7 +33,6 @@ class VPNTool:
 		self.infolabel = self.builder.get_object('labelinfo')
 		self.statuslabel = self.builder.get_object('labelonoff')
 		self.serverBox = self.builder.get_object('serverlist')
-		self.serverList = list()
 		print("Little PP Config Tool " + version + " started!")
 		self.getServers()
 
@@ -42,8 +41,11 @@ class VPNTool:
 		self.tray.set_visible(False)
 		self.tray.set_from_file("./gui/trayicon.svg")
 		self.tray.connect("activate", self.iconToogleVisibility)
+		
+		self.checkCounter = 0;	
 		self.checkVPN()
-		GObject.timeout_add(3500, self.checkVPN)	# check vpn status every 3.5 seconds
+		GObject.timeout_add(3300, self.checkVPN)	# check vpn status every 3.3 seconds
+		
 		
 		self.window.show_all()
 		self.tray.set_visible(True)
@@ -65,7 +67,6 @@ class VPNTool:
 					server = server.split('#', 1)[0]
 			i += 1
 			self.serverBox.append_text(server)
-			self.serverList.append(server)
 			if server == self.currentServer:
 				cIndex = i
 					
@@ -99,36 +100,36 @@ class VPNTool:
 	# updates the trayicon and the "connection status"-label
 	def checkVPN(self):
 		activeVPN = False
-		out = getoutput("nmcli con status")
-		outlist = out.split("\n")
-
+			
 		# check if vpn connection is active
-		for i in range(0, len(outlist)):
-			conInfo = outlist[i].rsplit()
-			if len(conInfo) > 0 and conInfo[0] == mainconfig.get('General', 'connection'):
-				activeVPN = True
-				
-		if activeVPN:
-			if hasattr(self, 'pStop') and self.pStop.poll() == None:
-				return True
-			
-			if not hasattr(self, 'connectionInfo') or self.connectionInfo == "":
-				python = sys.executable
-				activeServer = getoutput(python + " ./srv/get_servername.py")
+		python = sys.executable
+		vpnStatus = getoutput(python + " ./srv/vpn_status.py " + mainconfig.get('General', 'connection'))
 
-				if activeServer == "":
-					return True
-									
-				# connected
-				if activeServer in self.serverList:
-					self.connectionInfo = activeServer.split('.')[0]
-					self.infolabel.set_label(self.connectionInfo)
-					self.statuslabel.set_label(' <span color="darkgreen">online</span> ')
-					self.tray.set_from_file("./gui/trayicon2.svg")
-			
+		if vpnStatus == "connected":
+			# for better performace, check only every 10 seconds if the ip changed
+			self.checkCounter = (self.checkCounter + 1) % 3
+			if self.checkCounter != 1:
+				return True
+
+			# get the server name
+			activeServer = getoutput(python + " ./srv/get_servername.py")
+								
+			# connected
+			if activeServer != "" and activeServer.endswith('.perfect-privacy.com'):
+				connectionInfo = activeServer.split('.')[0]
+				self.infolabel.set_label(connectionInfo)
+				self.statuslabel.set_label(' <span color="darkgreen">online</span> ')
+				self.tray.set_from_file("./gui/trayicon2.svg")
+					
+			return True
+		
+		# connecting
+		elif vpnStatus == "connecting":
+			self.statuslabel.set_label('<span color="orange">connecting</span>')
+			self.infolabel.set_label("-")
 			return True
 
-		# connecting
+		# (re)connect button was clicked
 		if hasattr(self, 'nextConnect') and self.nextConnect:
 			self.doConnect()
 			self.nextConnect = False
@@ -136,7 +137,6 @@ class VPNTool:
 		
 		# inactive connection 
 		self.infolabel.set_label("-")
-		self.connectionInfo = ""
 		self.statuslabel.set_label(' <span color="darkred">offline</span> ')
 		self.tray.set_from_file("./gui/trayicon.svg")
 		return True
@@ -146,7 +146,6 @@ class VPNTool:
 	def stopVPN(self, menuitem):
 		print("Disconnecting VPN...")
 		self.statuslabel.set_label('<span color="orange">disconnecting</span>')
-		self.connectionInfo = ""
 		self.pStop = Popen("nmcli con down id " + mainconfig.get('General', 'connection'), shell=True)
 
 	# "Edit File"-Menuentrys
@@ -247,7 +246,6 @@ class VPNTool:
 		print("Connecting to VPN...")	
 		self.statuslabel.set_label('<span color="orange">connecting</span>')
 		self.infolabel.set_label("-")
-		self.connectionInfo = ""
 		self.tray.set_from_file("./gui/trayicon.svg")
 		self.pCon = Popen("nmcli con up id " + mainconfig.get('General', 'connection'), shell=True)
 	
