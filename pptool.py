@@ -8,7 +8,7 @@
 	#																			#
 	#############################################################################
 
-version = "v0.314159265"
+version = "v0.32"
 desc = "Little config tool for Perfect Privacy / Gnome Network Manager to change the VPN servers quickly! :)"
 
 import os, sys, configparser, webbrowser
@@ -33,7 +33,9 @@ class VPNTool:
 		self.infolabel = self.builder.get_object('labelinfo')
 		self.statuslabel = self.builder.get_object('labelonoff')
 		self.serverBox = self.builder.get_object('serverlist')
-		print("Little PP Config Tool " + version + " started!")
+		self.autoReconnectLabel = self.builder.get_object('labelautoconnect')
+		
+		print("P² Config Tool " + version + " started!")
 		self.getServers()
 
 		# set up tray icon
@@ -44,7 +46,7 @@ class VPNTool:
 		
 		self.checkCounter = 0;	
 		self.checkVPN()
-		GObject.timeout_add(3500, self.checkVPN)	# check vpn status every 3.5 seconds
+		GObject.timeout_add(3000, self.checkVPN)	# check vpn status 3 every seconds
 		
 		
 		self.window.show_all()
@@ -115,10 +117,13 @@ class VPNTool:
 			# connected
 			if activeServer != "" and activeServer.endswith('.perfect-privacy.com'):
 				connectionInfo = activeServer.split('.')[0]
-				self.infolabel.set_label(connectionInfo)
-				self.statuslabel.set_label(' <span color="darkgreen">online</span> ')
-				self.tray.set_from_file("./gui/trayicon2.svg")
-				self.checkCounter = 1
+			else: 
+				activeServer = "unknown"
+
+			self.infolabel.set_label(connectionInfo)
+			self.statuslabel.set_label(' <span color="darkgreen">online</span> ')
+			self.tray.set_from_file("./gui/trayicon2.svg")
+			self.checkCounter = 1
 			return True
 		
 		# connecting
@@ -128,12 +133,12 @@ class VPNTool:
 			self.checkCounter = 0
 			return True
 
-		# (re)connect button was clicked
-		if hasattr(self, 'nextConnect') and self.nextConnect:
+		# (re)connect
+		if (hasattr(self, 'nextConnect') and self.nextConnect) or self.autoReconnectLabel.get_active():
 			self.doConnect()
 			self.nextConnect = False
 			return True
-		
+						
 		# inactive connection 
 		self.infolabel.set_label("-")
 		self.statuslabel.set_label(' <span color="darkred">offline</span> ')
@@ -147,6 +152,7 @@ class VPNTool:
 		print("Disconnecting VPN...")
 		self.statuslabel.set_label('<span color="orange">disconnecting</span>')
 		self.pStop = Popen("nmcli con down id " + mainconfig.get('General', 'connection'), shell=True)
+		self.checkCounter = 0
 
 	# "Edit File"-Menuentrys
 	def openSysConfig(self, menuitem):
@@ -206,10 +212,8 @@ class VPNTool:
 		
 		if self.infobox.get_visible():
 			self.infobox.hide()
-			self.togglelabel.set_label("Show connection status")
 		else:
 			self.infobox.show()
-			self.togglelabel.set_label("Hide connection status")
 
 	
 	# show about dialog
@@ -248,6 +252,7 @@ class VPNTool:
 		self.infolabel.set_label("-")
 		self.tray.set_from_file("./gui/trayicon.svg")
 		self.pCon = Popen("nmcli con up id " + mainconfig.get('General', 'connection'), shell=True)
+		self.checkCounter = 0
 	
 	# update PP gateway server
 	def setNewServer(self, combobox):

@@ -32,12 +32,17 @@
   <object class="GtkImage" id="image6">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="stock">gtk-index</property>
+    <property name="stock">gtk-file</property>
   </object>
   <object class="GtkImage" id="image7">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-connect</property>
+  </object>
+  <object class="GtkImage" id="image8">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-refresh</property>
   </object>
   <object class="GtkWindow" id="window">
     <property name="can_focus">False</property>
@@ -153,39 +158,65 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem3">
-                        <property name="label">Network Settings File</property>
+                      <object class="GtkCheckMenuItem" id="labelautoconnect">
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="image">image2</property>
-                        <property name="use_stock">False</property>
-                        <property name="always_show_image">True</property>
-                        <signal name="activate" handler="openSysConfig" swapped="no"/>
+                        <property name="tooltip_text" translatable="yes">Try to reconnect whenever the VPN-connection is offline.</property>
+                        <property name="label" translatable="yes">Autoconnect</property>
+                        <property name="use_underline">True</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem4">
-                        <property name="label">Tool Settings</property>
+                      <object class="GtkImageMenuItem" id="menuitem2">
+                        <property name="label" translatable="yes">Edit config files</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="image">image4</property>
+                        <property name="image">image6</property>
                         <property name="use_stock">False</property>
-                        <property name="always_show_image">True</property>
-                        <signal name="activate" handler="openToolConfig" swapped="no"/>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem1">
-                        <property name="label" translatable="yes">Edit Serverlist</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="image">image5</property>
-                        <property name="use_stock">False</property>
-                        <property name="always_show_image">True</property>
-                        <signal name="activate" handler="openServerlist" swapped="no"/>
+                        <child type="submenu">
+                          <object class="GtkMenu" id="menu6">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <object class="GtkImageMenuItem" id="imagemenuitem3">
+                                <property name="label">VPN settings</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="image">image2</property>
+                                <property name="use_stock">False</property>
+                                <property name="always_show_image">True</property>
+                                <signal name="activate" handler="openSysConfig" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkImageMenuItem" id="imagemenuitem4">
+                                <property name="label">Tool settings</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="image">image4</property>
+                                <property name="use_stock">False</property>
+                                <property name="always_show_image">True</property>
+                                <signal name="activate" handler="openToolConfig" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkImageMenuItem" id="imagemenuitem5">
+                                <property name="label" translatable="yes">Serverlist</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="image">image5</property>
+                                <property name="use_stock">False</property>
+                                <property name="always_show_image">True</property>
+                                <signal name="activate" handler="openServerlist" swapped="no"/>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
@@ -204,15 +235,12 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkImageMenuItem" id="labeltogglestatus">
-                        <property name="label" translatable="yes">Hide connection status</property>
+                      <object class="GtkCheckMenuItem" id="labeltogglestatus">
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="image">image6</property>
-                        <property name="use_stock">False</property>
-                        <property name="always_show_image">True</property>
-                        <signal name="activate" handler="toggleStatus" swapped="no"/>
+                        <property name="label" translatable="yes">Hide connection status</property>
+                        <signal name="toggled" handler="toggleStatus" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -308,7 +336,6 @@
             </child>
             <child>
               <object class="GtkButton" id="button1">
-                <property name="label">Apply</property>
                 <property name="use_action_appearance">False</property>
                 <property name="width_request">3</property>
                 <property name="height_request">45</property>
@@ -321,6 +348,7 @@
                 <property name="margin_top">3</property>
                 <property name="margin_bottom">3</property>
                 <property name="use_action_appearance">False</property>
+                <property name="image">image8</property>
                 <property name="focus_on_click">False</property>
                 <property name="xalign">0.50999999046325684</property>
                 <signal name="clicked" handler="reconnect" swapped="no"/>
