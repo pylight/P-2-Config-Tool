@@ -14,7 +14,8 @@ desc = "Little config tool for Perfect Privacy / Gnome Network Manager to change
 import os, sys, configparser, webbrowser
 from gi.repository import Gtk, GObject
 from urllib.request import urlopen 
-from subprocess import Popen, getoutput
+from subprocess import Popen, getoutput, PIPE
+from time import time, sleep
 
 # own modules
 from initConfig import initConfig
@@ -112,13 +113,26 @@ class VPNTool:
 				return True
 
 			# get the server name
-			activeServer = getoutput(python + " ./srv/get_servername.py")
-								
+			#activeServer = getoutput(python + " ./srv/get_servername.py")
+			tBeginning = time()
+			timeout = 3
+			pGetServer = Popen(python + " ./srv/get_servername.py", stdout=PIPE, shell=True)
+						
+			while pGetServer.poll() is None:
+				secondsPassed = time() - tBeginning
+				if secondsPassed > timeout:
+					pGetServer.terminate()
+					print("Error: Coudn't get server after " + str(timeout) + " seconds")
+					break
+			
+			activeServer = pGetServer.communicate()[0]
+			activeServer = str(activeServer, "utf-8").rstrip("\n")		
+										
 			# connected
-			if activeServer != "" and activeServer.endswith('.perfect-privacy.com'):
+			if activeServer != "" and activeServer.endswith(".perfect-privacy.com"):
 				connectionInfo = activeServer.split('.')[0]
 			else: 
-				activeServer = "unknown"
+				connectionInfo = "unknown"
 
 			self.infolabel.set_label(connectionInfo)
 			self.statuslabel.set_label(' <span color="darkgreen">online</span> ')
